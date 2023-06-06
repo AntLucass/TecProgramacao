@@ -1,96 +1,106 @@
+
 package lab2;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.color.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class Janela extends JFrame{
-
+public class Janela extends JFrame {
 	
-
-	public JLabel janela;
-	public JPanel painel1;
-	public JPanel painel2;
+	protected JButton botaoDeCadastrar;
+	protected JButton botaoDeListar;
+	protected JButton botaoDeAtualizar;
+	protected JButton botaoDeDeletar;
+	protected JPanel menu;
+	protected JPanel painelGeral;
+	protected OpcaoCadastro cadastro;
+	protected OpcaoListar listar;
+	protected OpcaoAtualizar atualizar;
+	protected OpcaoDeletar deletar;
+	protected ArrayList<JPanel> paineis;
+	
 	
 	public Janela() {
-		janela = new JLabel();
-		this.setSize(500,500);
+		
+		this.setSize(500, 500);
+		//this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new GridLayout(1,1));
+		this.setLayout(new BorderLayout(2, 1));
+		
+		menu = new JPanel();
+		menu.setBackground(Color.darkGray);
+		painelGeral = new JPanel();
+		painelGeral.setLayout(new GridBagLayout());
+		
+		cadastro = new OpcaoCadastro();
+		cadastro.setBackground(Color.DARK_GRAY);
+		listar = new OpcaoListar();
+		atualizar = new OpcaoAtualizar();
+		deletar = new OpcaoDeletar();
+		
+		painelGeral.add(cadastro);
+		painelGeral.add(listar);
+		painelGeral.add(atualizar);
+		painelGeral.add(deletar);
+		
+		paineis = new ArrayList<JPanel>();
+		paineis.add(0, cadastro);
+		paineis.add(1, listar);
+		paineis.add(2, atualizar);
+		paineis.add(3, deletar);
+		
+		
+		
+		botaoDeCadastrar = new JButton("Cadastrar");
+		botaoDeCadastrar.setBackground(Color.LIGHT_GRAY);
+		botaoDeCadastrar.addActionListener(new showPaineis(0));
+		menu.add(botaoDeCadastrar);
+		
+		botaoDeListar = new JButton("Listar");
+		botaoDeListar.setBackground(Color.LIGHT_GRAY);
+		botaoDeListar.addActionListener(new showPaineis(1));
+		menu.add(botaoDeListar);
+		
+		botaoDeAtualizar = new JButton("Atualizar");
+		botaoDeAtualizar.setBackground(Color.LIGHT_GRAY);
+		botaoDeAtualizar.addActionListener(new showPaineis(2));
+		menu.add(botaoDeAtualizar);
+		
+		botaoDeDeletar = new JButton("Deletar");
+		botaoDeDeletar.setBackground(Color.LIGHT_GRAY);
+		botaoDeDeletar.addActionListener(new showPaineis(3));
+		menu.add(botaoDeDeletar);
+		
 
-		painel1 = criarPainel(Color.black);
-		painel1.add(janela);
-		janela.add(painel1, BorderLayout.NORTH);
-	
-		/*
-		painel2 = criarPainel(Color.blue);
-		painel2.add(janela);
-		this.add(painel2);
-		painel2.setLayout(new BorderLayout());
-	    painel2.add(new Button("Okay"), BorderLayout.SOUTH);
-	    painel2.setVisible(false);
-		*/
+		this.add(menu, BorderLayout.NORTH);
+		this.add(painelGeral, BorderLayout.CENTER);
 		
-		
-		JButton botao1 = criarbotao(Color.GRAY,"Cadrastro");
-		painel1.add(botao1);
-		
-		
-		JButton botao2 = criarbotao(Color.GRAY,"test1");
-		painel1.add(botao2);
-		
-		JButton botao3 = criarbotao(Color.GRAY,"test1");
-		painel1.add(botao3);
-		
-		
-		
-		
-		
-		//painel2.setVisible(teladecadrastro());
-	
 		this.setVisible(true);
 	}
-	public JPanel criarPainel(Color c) {
-		JPanel painel = new JPanel();
-		painel.setBackground(c);
-		return painel;}
 	
-	public JButton criarbotao(Color c, String s) {
-		JButton b = new JButton(s);
-		b.setBackground(c);
-		return b;
-		
-	}
 	
-	public boolean teladecadrastro() {
-		return true;
-		
-	}
-	
-	private class Cadrastro implements ActionListener{
-
-		public Cadrastro() {
-			// TODO Auto-generated constructor stub
+private class showPaineis implements ActionListener {
+		int opcao;
+		public showPaineis(int opcao) {
+			this.opcao = opcao;
 		}
-
-		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			for(int i = 0; i< paineis.size(); i++) {
+				paineis.get(i).setVisible(false);
+			}
 			
+			if(paineis.get(opcao).isVisible())
+				paineis.get(opcao).setVisible(false);
+			else
+				paineis.get(opcao).setVisible(true);
 		}
-
-	}
-	
-	
-	
-	
+}
 }
