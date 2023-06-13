@@ -1,17 +1,17 @@
 package sistema;
 
-public class Cliente {
+public class Usuario { 
 
-	private String name;
+	private String nome;
 	private String cpf;
 	private int matricula;
 	private String vertente;
 	
 	
-	public Cliente(String name, String cpf, int matricula, String vertente) {
+	public Usuario(String nome, String cpf, int matricula, String vertente) {
 		
 super();
-		this.name = name;
+		this.nome = nome;
 		this.cpf = cpf;
 		this.matricula = matricula;
 		this.vertente = vertente;
@@ -28,8 +28,8 @@ super();
 	}
 
 
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
 
 
